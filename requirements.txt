@@ -1,0 +1,14 @@
+django
+djangorestframework
+drf-yasg
+gunicorn
+polls
+markdown
+django-filter
+psycopg2
+django-environ
+django-cors-headers
+django-rest-auth 
+django-allauth
+djangorestframework-jwt
+pyrebase4
