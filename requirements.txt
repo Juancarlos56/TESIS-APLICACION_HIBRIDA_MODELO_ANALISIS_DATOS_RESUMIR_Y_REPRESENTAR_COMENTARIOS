@@ -12,3 +12,4 @@ django-rest-auth
 django-allauth
 djangorestframework-jwt
 pyrebase4
+firebase-admin
