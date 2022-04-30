@@ -24,7 +24,7 @@ env = environ.Env(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # reading .env file
-environ.Env.read_env(os.path.join(BASE_DIR, 'enviroment.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, 'vars/enviroment.env'))
 
 
 # Quick-start development settings - unsuitable for production
