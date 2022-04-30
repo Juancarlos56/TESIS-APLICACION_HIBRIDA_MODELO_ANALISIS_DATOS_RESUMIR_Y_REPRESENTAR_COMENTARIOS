@@ -12,7 +12,7 @@ env = environ.Env(
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # reading .env file
-environ.Env.read_env(os.path.join(BASE_DIR, 'enviroment.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, 'vars/enviroment.env'))
 
 
 #code Firebase, credenciales del proyecto.
