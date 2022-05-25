@@ -25,7 +25,6 @@ def guardarComentario(request):
     
     #IDS generados automaticamente por firebase, para modificar agregar un valor dentro de document
     CLOUD_DATABASE.collection("Comentario").document().set(data)
-
     return Response({'saveComment': 'True'}, status=status.HTTP_201_CREATED)
 
     
