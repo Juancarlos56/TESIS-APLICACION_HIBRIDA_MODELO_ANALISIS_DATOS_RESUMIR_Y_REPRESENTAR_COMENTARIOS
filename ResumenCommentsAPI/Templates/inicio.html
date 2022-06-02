@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign</title>
+
+</head>
+<body>
+<form action="/predecir/" method="post">
+    {% csrf_token %}
+    <p>prueba:
+    <input type="number" name="Edad"></p>
+ 
+    
+    <p><input type="submit" value="guardar"></p>
+</form>
+</body>
+</html>
