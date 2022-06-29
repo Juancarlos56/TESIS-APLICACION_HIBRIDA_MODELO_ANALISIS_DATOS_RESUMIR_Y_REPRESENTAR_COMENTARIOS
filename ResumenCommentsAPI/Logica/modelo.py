@@ -16,9 +16,14 @@ import pickle
 from ResumenCommentsAPI.Logica import modelo
 
 
+
+
 class modelo():
 
 
     def predecir(self, Edad=40):
 
         return 30
+
+
+    
