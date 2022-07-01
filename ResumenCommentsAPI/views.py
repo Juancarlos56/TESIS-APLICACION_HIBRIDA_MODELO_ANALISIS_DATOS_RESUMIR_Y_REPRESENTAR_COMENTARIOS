@@ -1,16 +1,13 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import permissions
-from ResumenCommentsAPI.ClavesPrivadas.firebaseAdminConfig import CLOUD_DATABASE
 from django.shortcuts import render
-from ResumenCommentsAPI.Logica import modelo #para utilizar el método inteligente
+
+##from ResumenCommentsAPI.Logica import modelo #para utilizar el método inteligente
 
 # Create your views here.
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
-import json
-from django.http import JsonResponse
 
-
+"""
 class Regresion():
     def mostrarFormulario(request):
         return render(request, "inicio.html")
@@ -28,3 +25,4 @@ class Regresion():
         except:
             resul='Datos inválidos'
         return render(request, "resultado.html",{"e":resul})
+"""

@@ -6,7 +6,7 @@ from rest_framework import permissions
 from ResumenCommentsAPI.ClavesPrivadas.firebaseAdminConfig import CLOUD_DATABASE
 from datetime import datetime
 from django.utils import timezone
-from ResumenCommentsAPI.RESTFUL.resumenComentarios import resumenComentario as resumenComentario
+from .resumenComentarios import resumenComentario as resumenComentario
 
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny,))

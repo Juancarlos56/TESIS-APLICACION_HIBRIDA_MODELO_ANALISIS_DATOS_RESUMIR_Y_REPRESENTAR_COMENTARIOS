@@ -8,8 +8,8 @@ from ResumenCommentsAPI.RESTFUL import clasificacionComentarios as clasificacion
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/guardarCometario$', clasificacionComentarios.guardarComentario),
-    url(r'home',views.Regresion.mostrarFormulario),
-    url(r'predecir/',views.Regresion.predecir),
+    #url(r'home',views.Regresion.mostrarFormulario),
+    #url(r'predecir/',views.Regresion.predecir),
 
 
 ]

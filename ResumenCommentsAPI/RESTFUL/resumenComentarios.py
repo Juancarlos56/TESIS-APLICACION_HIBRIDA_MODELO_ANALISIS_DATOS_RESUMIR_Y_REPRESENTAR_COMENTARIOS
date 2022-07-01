@@ -1,9 +1,11 @@
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework import permissions
+from ResumenCommentsAPI.Logica.ResourcesFilesTransformerSpanish.Summarization import SummarizationPredict
 
-
-#@api_view(['POST'])
-#@permission_classes((permissions.AllowAny,))
+"""
+    Metodo que conecta con el servicio para resumen de texto
+    recibimos el texto ingresado por el usuario
+    model transformer es el encargado de realizar el resumen
+"""
 def resumenComentario(comentarioCompleto):
-    return "algoritmo para resumen de texto"
+    return SummarizationPredict().predictSummarization(comentarioCompleto)
