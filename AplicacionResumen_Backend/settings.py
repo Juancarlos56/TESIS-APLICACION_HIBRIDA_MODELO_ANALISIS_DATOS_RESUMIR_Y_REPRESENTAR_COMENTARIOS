@@ -36,7 +36,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =  env('DEBUG')
 
-ALLOWED_HOSTS = ['*','localhost', '127.0.0.1', '172.16.42.78']
+ALLOWED_HOSTS = ['*','localhost', '127.0.0.1', '172.16.219.51']
 
 
 # Application definition
@@ -61,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ##Libreia de cors 
+     "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'AplicacionResumen_Backend.urls'
@@ -154,25 +156,18 @@ CORS_ORIGIN_ALLOW_ALL: True
 CORS_ALLOW_CREDENTIALS: True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:4200",
-    "http://localhost:4200",
-    "http://192.168.100.184:4200",
-    "http://192.168.100.184:4200",
-    "http://172.16.219.38:4200",
+    "http://localhost:8100",
+    "http://172.16.219.51:8100",
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://\w+\.localhost:4200$",
-    r"^https://\w+\.127.0.0.1:4200$",
-    r"^https://\w+\.192.168.100.184:4200$",
-    r"^https://\w+\.172.16.219.38:4200$",
+    r"^https://\w+\.localhost:8100$",
+    r"^https://\w+\.172.16.219.51:8100$",
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.1:4200",
-    "http://localhost:4200",
-    "http://192.168.100.184:4200",
-    "http://172.16.219.38:4200",
+    "http://localhost:8100",
+    "http://172.16.219.51:8100",
 ]
 
 CORS_ALLOW_METHODS = [

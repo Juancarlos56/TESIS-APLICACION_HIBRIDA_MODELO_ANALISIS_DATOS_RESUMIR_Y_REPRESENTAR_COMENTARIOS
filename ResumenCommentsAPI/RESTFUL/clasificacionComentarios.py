@@ -18,13 +18,18 @@ def guardarComentario(request):
     contenido_comentario = request.data.get('contenido_comentario')
     tipoComentario = request.data.get('tipoComentario')
     correoComentario = request.data.get('correoComentario')
-    resumen_Comentario = resumenComentario(contenido_comentario)
-
-    #Almacenamiento en la base de datos en la nube
-    data = {"correo_comentario":correoComentario,"name": contenido_comentario, "tipo_comentario":tipoComentario, "resumen_comentario":resumen_Comentario, "fecha_comentario": datetime.now(tz=timezone.utc)}
+    try:
+        resumen_Comentario = resumenComentario(contenido_comentario)
+        #Almacenamiento en la base de datos en la nube
+        data = {"correo_comentario":correoComentario,"comentario_completo": contenido_comentario, 
+                "tipo_comentario":tipoComentario, "resumen_comentario":resumen_Comentario, 
+                "fecha_comentario": datetime.now(tz=timezone.utc)}
     
-    #IDS generados automaticamente por firebase, para modificar agregar un valor dentro de document
-    CLOUD_DATABASE.collection("Comentario").document().set(data)
-    return Response({'saveComment': 'True'}, status=status.HTTP_201_CREATED)
-
+        #IDS generados automaticamente por firebase, para modificar agregar un valor dentro de document
+        CLOUD_DATABASE.collection("Comentario").document().set(data)
+        return Response({'stateComment': 'True'}, status=status.HTTP_201_CREATED)
+    except:
+        return Response({'stateComment': 'False'}, status=status.HTTP_201_CREATED)
+    
+    
     
