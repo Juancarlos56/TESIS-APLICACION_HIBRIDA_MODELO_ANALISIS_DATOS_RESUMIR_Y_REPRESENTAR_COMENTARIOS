@@ -6,14 +6,15 @@ from rest_framework import permissions
 from ResumenCommentsAPI.ClavesPrivadas.firebaseAdminConfig import CLOUD_DATABASE
 from datetime import datetime
 from django.utils import timezone
-from .resumenComentarios import resumenComentario as resumenComentario
+from ..ResumenComentarios.resumenComentarios import resumenComentario as resumenComentario
 import pandas as pd
-from .limpiezaData import procesamientoLimpieza
-from .metodosRepresentacion import (nubePalabras, usuariosByGenero, 
+from ..Preprocesamiento.limpiezaData import procesamientoLimpieza
+from .metodosRepresentacionGraficas import (nubePalabras, usuariosByGenero, 
                                     graficaDeSentimientoComentario,
                                     graficaPorEdades,obtener_top_n_words
                                     )
-from .uploadFiles import subirArchivosStorage
+from ..loadCloudFirebase.uploadFiles import subirArchivosStorage
+from django.http import JsonResponse
 
 #---------------------------------Nube de palabras para comentario Completo
 ##Nube palabras comentario completo
@@ -116,8 +117,8 @@ def topPalabrasMasImportantesResumenByTipo(request, tipo):
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
 def topPalabrasMasImportantesResumenByRangoFecha(request): 
-    inicioFecha = datetime.strptime(request.data.get('inicioFecha'), '%Y/%m/%d %H:%M:%S')
-    finFecha = datetime.strptime(request.data.get('finFecha'), '%Y/%m/%d %H:%M:%S')
+    inicioFecha = datetime.strptime(request.data.get('inicioFecha'), '%Y-%m-%d %H:%M:%S')
+    finFecha = datetime.strptime(request.data.get('finFecha'), '%Y-%m-%d %H:%M:%S')
     docs = CLOUD_DATABASE.collection(u'Comentario').where(u'fecha_comentario', u'>=', inicioFecha).where(u'fecha_comentario', u'<=', finFecha).stream()
     data = pd.DataFrame()
     for doc in docs:
@@ -192,8 +193,8 @@ def personasPorEdad(request):
         data.reset_index(drop=True, inplace=True)
         pathIMG = graficaPorEdades(data)
         pathCloud="images/edades/edadesUsuariosApp.png"
-        #rutaPath = subirArchivosStorage(pathIMG, pathCloud)
-        return Response({'status':'ok'}, status=status.HTTP_201_CREATED)
+        rutaPath = subirArchivosStorage(pathIMG, pathCloud)
+        return Response({'status':rutaPath}, status=status.HTTP_201_CREATED)
     except:
         return Response({'status':'Error generando grafico y storage'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -235,3 +236,51 @@ def graficasNgramasPalabras(request):
         return Response({'status':rutaPath}, status=status.HTTP_200_OK)
     except:
         return Response({'status':'Error generando grafico y storage'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+#---------------------------------lista de Comentarios para consultas basicas----------------------------
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def listaComentariosUsuario(request):
+    correo = request.data.get('correoComentario')  
+    docs = CLOUD_DATABASE.collection(u'Comentario').where(u'correo_comentario', u'==', correo).stream()
+    listData = []
+    for doc in docs:
+        listData.append(doc.to_dict())
+    return JsonResponse({"comentarios": listData}) 
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def listaComentariosFechaEspecifica(request):
+    inicioFecha = datetime.strptime(request.data.get('fechaInicio'), '%Y-%m-%d %H:%M:%S')
+    finFecha = datetime.strptime(request.data.get('fechaFin'), '%Y-%m-%d %H:%M:%S')
+    docs = CLOUD_DATABASE.collection(u'Comentario').where(u'fecha_comentario', u'>=', inicioFecha).where(u'fecha_comentario', u'<=', finFecha).stream()
+    listData = []
+    for doc in docs:
+        listData.append(doc.to_dict())
+    return JsonResponse({"comentarios": listData}) 
+
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def listarComentarioSentimiento(request):
+    tipoSentimiento = request.data.get('sentimiento')
+    docs = CLOUD_DATABASE.collection(u'Comentario').where(u'tipo_comentario', u'==', tipoSentimiento).stream()
+    listData = []
+    for doc in docs:
+        listData.append(doc.to_dict())
+    return JsonResponse({"comentarios": listData}) 
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def listarComentarioSentimientoFecha(request):
+    inicioFecha = datetime.strptime(request.data.get('fechaInicio'), '%Y-%m-%d %H:%M:%S')
+    finFecha = datetime.strptime(request.data.get('fechaFin'), '%Y-%m-%d %H:%M:%S')
+    tipoSentimiento = request.data.get('sentimiento')
+    docs = CLOUD_DATABASE.collection(u'Comentario').where(u'tipo_comentario', u'==', tipoSentimiento)
+    docs = docs.where(u'fecha_comentario', u'>=', inicioFecha)
+    docs = docs.where(u'fecha_comentario', u'<=', finFecha).stream()
+    listData = []
+    for doc in docs:
+        listData.append(doc.to_dict())
+    return JsonResponse({"comentarios": listData}) 
