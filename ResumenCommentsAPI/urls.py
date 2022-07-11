@@ -26,8 +26,6 @@ urlpatterns = [
     path('api/usersEdad', representacionComments.personasPorEdad),
     #Top palabras mas usadas
     url(r'^api/graficasNgramasPalabras$', representacionComments.graficasNgramasPalabras),
-    ##Retorno de lista de comentarios TODOS
-    path('api/todosComentariosAdmin', representacionComments.todosComentarios),
     ##Retorno de lista de comentarios de un usuario
     url(r'^api/comentariosUsuario$', representacionComments.listaComentariosUsuario),
     ##Retorno de lista de comentarios por fecha
@@ -42,11 +40,13 @@ urlpatterns = [
     url(r'^api/generandoTopicDataset', representacionComments.generandoTopicDataset),
     #Topic de palabras segun documento de comentarios
     url(r'^api/generandoTopicDataset', representacionComments.generandoTopicDataset),
+    
+    #--------------------------URLS para carga de datos de datatoy
     #Cargar de comentarios para analisis
     ##Descomentar Url para generar registrar nuevos comentarios
     #path('api/cargaComentarios', agregarComentariosCloud.cargarComenariosFirebase),
     
-    
+    #----------------URLS para interfaz grafica django----------------------
     #url(r'home',views.Regresion.mostrarFormulario),
     #url(r'predecir/',views.Regresion.predecir),
 

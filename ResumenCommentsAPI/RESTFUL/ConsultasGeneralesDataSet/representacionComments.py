@@ -27,14 +27,13 @@ def personasPorGenero(request):
     docs = CLOUD_DATABASE.collection(u'users').stream()
     data = pd.DataFrame()
     for doc in docs:
-        #data = data.append(doc.to_dict(), ignore_index=True)
         data = pd.concat([data, pd.DataFrame.from_records([doc.to_dict()])])
     try:
         data.reset_index(drop=True, inplace=True)
         usuariosCount = usuariosByGenero(data)
         return Response(usuariosCount, status=status.HTTP_201_CREATED)
     except:
-        return Response({'status':'Erro generando grafico y storage'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'status':'Error generando grafico y storage'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 #-----------------------------------------Cantidad De Comentarios por Tipo --------------------------
@@ -45,14 +44,13 @@ def cantidadDeComentariosPorTipo(request):
     docs = CLOUD_DATABASE.collection(u'Comentario').stream()
     data = pd.DataFrame()
     for doc in docs:
-        #data = data.append(doc.to_dict(), ignore_index=True)
         data = pd.concat([data, pd.DataFrame.from_records([doc.to_dict()])])
     try:
         data.reset_index(drop=True, inplace=True)
         sentimientoCount = sentimientoDeComentario(data)
         return Response(sentimientoCount, status=status.HTTP_201_CREATED)
     except:
-        return Response({'status':'Erro generando grafico y storage'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'status':'Error generando grafico y storage'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 
@@ -67,11 +65,10 @@ def cantidadDeComentariosPorTipoSentimientoEnTiempo(request):
     docs = docs.where(u'fecha_comentario', u'<=', finFecha).stream()
     data = pd.DataFrame()
     for doc in docs:
-        #data = data.append(doc.to_dict(), ignore_index=True)
         data = pd.concat([data, pd.DataFrame.from_records([doc.to_dict()])])
-    data.reset_index(drop=True, inplace=True)
-    sentimientoCount = comentariosAtravesTiempo(data)
     try:
+        data.reset_index(drop=True, inplace=True)
+        sentimientoCount = comentariosAtravesTiempo(data)
         return Response(sentimientoCount, status=status.HTTP_201_CREATED)
     except:
         return Response({'status':'Error generando grafico y storage'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -104,7 +101,6 @@ def personasPorEdad(request):
     docs = CLOUD_DATABASE.collection(u'users').stream()
     data = pd.DataFrame()
     for doc in docs:
-        #data = data.append(doc.to_dict(), ignore_index=True)
         data = pd.concat([data, pd.DataFrame.from_records([doc.to_dict()])])
     try:
         data.reset_index(drop=True, inplace=True)
@@ -126,13 +122,11 @@ def graficasNgramasPalabras(request):
     palabras = request.data.get('numeroPalabras')
     ngrama = request.data.get('numeroNgrama')
     clasificacion = request.data.get('clasificacionComment')
-
     if(clasificacion == 'SinClasificacion'):
         docs = CLOUD_DATABASE.collection(u'Comentario').stream()
     elif(clasificacion!=''):
         docs = CLOUD_DATABASE.collection(u'Comentario').where(u'tipo_comentario', u'==', clasificacion).stream()
         
-    
     data = pd.DataFrame()
     for doc in docs:
         data = pd.concat([data, pd.DataFrame.from_records([doc.to_dict()])])
@@ -153,21 +147,6 @@ def graficasNgramasPalabras(request):
 
 
 #---------------------------------lista de Comentarios para consultas basicas----------------------------
-
-@api_view(['GET'])
-@permission_classes((permissions.AllowAny,))
-def todosComentarios(request):
-    docs = CLOUD_DATABASE.collection(u'Comentario').stream()
-    data = pd.DataFrame()
-
-    for doc in docs:
-        data = pd.concat([data, pd.DataFrame.from_records([doc.to_dict()])])
-
-    data['fecha_comentario'] = pd.to_datetime(data['fecha_comentario']).dt.strftime('%Y-%m-%dT%H:%M:%SZ')
-    print(type(data['fecha_comentario'][0]))
-    return JsonResponse({"comentarios": 'ok'}) 
-
-
 
 
 @api_view(['POST'])
