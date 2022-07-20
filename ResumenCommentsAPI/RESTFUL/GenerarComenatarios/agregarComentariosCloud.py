@@ -20,7 +20,7 @@ def cargaDataSet(nombreArchivo):
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
 def cargarComenariosFirebase(request): 
-    dataset = cargaDataSet('ResumenCommentsAPI\RESTFUL\GenerarComenatarios\Datasets\ComentariosConResumenCorto.csv')
+    dataset = cargaDataSet('ResumenCommentsAPI\Logica\DatasetComentarios\ComentariosConResumenCorto.csv')
     print(dataset)
     #CLOUD_DATABASE.collection("Comentario").document().set(data)
     #data = pd.DataFrame()
@@ -58,6 +58,7 @@ def cargarComenariosFirebase(request):
             contNegativos = contNegativos + 1 
         
         listaComentarios.append(data)
+        contUser = contUser + 1
     
     for comentarios in listaComentarios:
         CLOUD_DATABASE.collection("Comentario").document().set(comentarios)

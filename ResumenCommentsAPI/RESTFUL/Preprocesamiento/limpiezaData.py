@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 import string
 import nltk
 from nltk.corpus import stopwords
+import spacy
+nlp = spacy.load('es_core_news_sm')
 
 nltk.download('stopwords')
 stop_words = set(stopwords.words('spanish')) 
@@ -43,8 +45,8 @@ def limpiarDataset(dataset):
         newSummaryLimpio = limpiarTexto(t)
         summarylimpio.append(newSummaryLimpio)
         
-    dataset['cleaned_text']=textoLimpio
-    dataset['cleaned_summary']=summarylimpio
+    dataset=dataset.assign(cleaned_text=textoLimpio)
+    dataset=dataset.assign(cleaned_summary=summarylimpio)
     return dataset
 
 def stopWords(textoLimpio, numero):
@@ -71,13 +73,37 @@ def stopWords_dataset(datasetLimpio):
         newSummaryToken = stopWords(t,1)
         summaryToken.append(newSummaryToken)
         
-    datasetLimpio['token_text']=textoToken
-    datasetLimpio['token_summary']=summaryToken
+    datasetLimpio=datasetLimpio.assign(token_text=textoToken)
+    datasetLimpio=datasetLimpio.assign(token_summary=summaryToken)
     return datasetLimpio
+
+def lematizacion(texto):
+    doc = nlp(texto)
+    lemmas = [tok.lemma_.lower() for tok in doc]
+    return (" ".join(lemmas)).strip()
+
+def lematizacion_dataset(dataToken):
+    ## Limpiamos el texto de la columna text 
+    textoLema = []
+    for t in dataToken['token_text']:
+        newtextoToken = lematizacion(t)
+        textoLema.append(newtextoToken) 
+        
+    ## Limpiamos el texto de la columna Summary 
+    summaryLema = []
+    for t in dataToken['token_summary']:
+        newSummaryToken = lematizacion(t)
+        summaryLema.append(newSummaryToken)
+
+    dataToken=dataToken.assign(lema_text=textoLema)
+    dataToken=dataToken.assign(lema_summary=summaryLema)
+
+    return dataToken
 
 def procesamientoLimpieza(data):
     data = eliminarValoresNulos(data)
     data = limpiarDataset(data)
     data = stopWords_dataset(data)
+    data = lematizacion_dataset(data)
     data.reset_index(drop=True, inplace=True)
     return data
