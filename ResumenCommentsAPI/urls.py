@@ -49,10 +49,13 @@ urlpatterns = [
     url(r'^api/listarComentarioSentimientoFecha$', representacionComments.listarComentarioSentimientoFecha),
     #Cantidad de comentarios por tipo sentimiento en el tiempo
     url(r'^api/cantidadDeComentariosPorTipoSentimientoEnTiempo', representacionComments.cantidadDeComentariosPorTipoSentimientoEnTiempo),
+    ##------------------------Redes Sociales---------------------
     ##Obtener ultimas 25 publicaciones de facebook
-    url(r'^api/obtenerComentariosFacebook', consultaRedesSociales.obtenerComentariosUltimas25Publicaciones),
+    path('api/obtenerComentariosFacebook', consultaRedesSociales.obtenerComentariosUltimas25Publicaciones),
     ##Guardar ultimas 25 publicaciones de facebook
     path('api/guardarComentariosFacebook', consultaRedesSociales.almacenarComentariosUltimas25Publicaciones),
+    ##Obtener ultimas 25 publicaciones de facebook
+    url(r'^api/filtrarComentariosFacebookFecha', consultaRedesSociales.filtrarComentariosRedesSociales),
     
     #----------------URLS para interfaz grafica django----------------------
     #url(r'home',views.Regresion.mostrarFormulario),

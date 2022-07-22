@@ -2,6 +2,7 @@ import facebook as fb
 import requests
 import pandas as pd
 import time 
+from ...ClavesPrivadas.FacebookAPI import TOKEN_FACEBOOK
 
 
 def obtencionComentariosPublicacionPaginaFacebook(token, idPagina_idPost):
@@ -52,8 +53,8 @@ def obtencionComentariosFacebook(token):
     almacenarComentariosCSV(df)
     return df
 
-def main(access_token):
-    df = obtencionComentariosFacebook(access_token)
+def main():
+    df = obtencionComentariosFacebook(TOKEN_FACEBOOK)
     return df
 
     
