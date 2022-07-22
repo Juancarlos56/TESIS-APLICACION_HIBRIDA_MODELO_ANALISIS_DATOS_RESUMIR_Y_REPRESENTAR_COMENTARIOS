@@ -84,19 +84,7 @@ def comentariosAtravesTiempo(data):
     df = pd.DataFrame(valores, columns = [ 'fecha', 'tipo', 'valor'])
     return df
 
-
-
-def print_top_words(model, feature_names, n_top_words):
-    listaTopics = []
-    for topic_idx, topic in enumerate(model.components_):
-        message = "Topic #%d: " % topic_idx
-        message += ", ".join([feature_names[i]
-                            for i in topic.argsort()[:-n_top_words - 1:-1]])
-        message += " ==> "+str(len(topic.argsort()))
-        print(message)
     
-    
-
 def generandoTopicDatasetComentarios(data, tipoDocument):
     valores = topicLSA(data, tipoDocument)
     df = pd.DataFrame(valores, columns = [ 'labels', 'categorias', 'valores'])

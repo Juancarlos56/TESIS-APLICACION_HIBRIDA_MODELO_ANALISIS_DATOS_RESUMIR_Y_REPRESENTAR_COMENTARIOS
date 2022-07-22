@@ -8,3 +8,4 @@ wordcloud
 scikit-learn
 transformers==4.16.2
 tensorflow
+spacy

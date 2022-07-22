@@ -23,7 +23,9 @@ def guardarComentario(request):
         #Almacenamiento en la base de datos en la nube
         data = {"correo_comentario":correoComentario,"comentario_completo": contenido_comentario, 
                 "tipo_comentario":tipoComentario, "resumen_comentario":resumen_Comentario, 
-                "fecha_comentario": datetime.now(tz=timezone.utc)}
+                "fecha_comentario": datetime.now(tz=timezone.utc),
+                "idPost": "NOT ID",
+                "RedSocial":"COCOments"}
     
         #IDS generados automaticamente por firebase, para modificar agregar un valor dentro de document
         CLOUD_DATABASE.collection("Comentario").document().set(data)

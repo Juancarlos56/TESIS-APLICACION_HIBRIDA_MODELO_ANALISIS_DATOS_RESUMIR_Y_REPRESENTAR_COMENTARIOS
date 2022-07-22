@@ -16,6 +16,7 @@ from .metodosParaRepresentacion import (usuariosByGenero,
                                     )
 from django.http import JsonResponse
 
+
 #-------------------------------------------Barra Horizontal para genero usuarios------------------------
 
 @api_view(['GET'])
@@ -193,3 +194,27 @@ def listarComentarioSentimientoFecha(request):
     return JsonResponse({"comentarios": listData}) 
 
 
+#---------------------------------lista de Comentarios almacenados con firestorage  para consultas basicas----------------------------
+
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def crearContenedorDeArchivosDesarrolloPandas(request):
+    docs = CLOUD_DATABASE.collection(u'Comentario').stream()
+    data = pd.DataFrame()
+    for doc in docs:
+        data = pd.concat([data, pd.DataFrame.from_records([doc.to_dict()])])
+    ruta = almacenamientoFileSystemDataFrame(data)
+    print(ruta)
+    return Response({'status':ruta}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def crearContenedorDeArchivosDesarrolloJson(request):
+    docs = CLOUD_DATABASE.collection(u'Comentario').stream()
+    listData = []
+    for doc in docs:
+        listData.append(doc.to_dict())
+    ruta = almacenamientoFileSystemJson(listData)
+    print(ruta)
+    return Response({'status':ruta}, status=status.HTTP_200_OK)
