@@ -11,6 +11,7 @@ DEBUG=True
 apiKey=""
 messagingSenderId=""
 appId=""
+tokenAPI=""
 ```
 
 2. ResumenCommentsAPI/ClavesPrivadas/serviceAccount.json
