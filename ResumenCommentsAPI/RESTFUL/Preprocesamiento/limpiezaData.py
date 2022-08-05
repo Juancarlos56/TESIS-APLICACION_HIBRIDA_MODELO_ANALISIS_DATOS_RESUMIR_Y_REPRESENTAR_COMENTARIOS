@@ -101,6 +101,7 @@ def lematizacion_dataset(dataToken):
     return dataToken
 
 def procesamientoLimpieza(data):
+    #comentar si se quiere eliminar todos los comenatios con algun valor nulo, tanto en columnas o filas
     data = eliminarValoresNulos(data)
     data = limpiarDataset(data)
     data = stopWords_dataset(data)

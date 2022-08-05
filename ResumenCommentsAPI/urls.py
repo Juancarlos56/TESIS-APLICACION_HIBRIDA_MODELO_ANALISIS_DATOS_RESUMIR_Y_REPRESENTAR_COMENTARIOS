@@ -12,6 +12,8 @@ from ResumenCommentsAPI.RESTFUL.ConsultaRedesSociales import consultaRedesSocial
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/guardarComentario$', ResumenCloudComentarios.guardarComentario),
+    url(r'^api/guardarComentarioClasificacion$', ResumenCloudComentarios.guardarComentarioClasificacion),
+    url(r'^api/guardarComentarioClasificacionProducto$', ResumenCloudComentarios.guardarComentarioClasificacionProducto),
     #Nube de palabras para comentario
     path('api/topPalabrasComentario/<str:tipo>', representacionCommentsGraficas.topPalabrasMasImportantesByTipo),
     path('api/topPalabrasComentario', representacionCommentsGraficas.topPalabrasMasImportantes),
@@ -32,6 +34,10 @@ urlpatterns = [
 
     ##URLS pensadas para el negocio 
     #Top Platos malos 
+
+    #Buscar palabras por categoria
+    url(r'^api/buscarCategoriaComentario$', consultaRestaurante.buscarCategoriaComentario),
+    #Buscar palabras en especifico
     url(r'^api/buscarEnDataset$', consultaRestaurante.buscarEnDataset),
     #Grafica de genero usuarios
     path('api/usersGenero', representacionComments.personasPorGenero),
@@ -56,6 +62,9 @@ urlpatterns = [
     path('api/guardarComentariosFacebook', consultaRedesSociales.almacenarComentariosUltimas25Publicaciones),
     ##Obtener ultimas 25 publicaciones de facebook
     url(r'^api/filtrarComentariosFacebookFecha', consultaRedesSociales.filtrarComentariosRedesSociales),
+    ##------------------------Mejores platos de restaurante-----------------------------
+    ##Obtener los 3 mejores y peores platos del restaurante
+    path('api/obtenerMejoresPeoresPlatosRestaurantes',consultaRestaurante.obtenerMejoresPeoresPlatosRestaurantes),
     
     #----------------URLS para interfaz grafica django----------------------
     #url(r'home',views.Regresion.mostrarFormulario),

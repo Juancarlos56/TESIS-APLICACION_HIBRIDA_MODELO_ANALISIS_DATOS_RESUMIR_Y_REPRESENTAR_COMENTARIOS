@@ -28,7 +28,7 @@ def almacenarComentariosUltimas25Publicaciones(request):
 def filtrarComentariosRedesSociales(request): 
     inicioFecha = datetime.strptime(request.data.get('fechaInicio'), '%Y-%m-%d %H:%M:%S')
     finFecha = datetime.strptime(request.data.get('fechaFin'), '%Y-%m-%d %H:%M:%S')
-    docs = CLOUD_DATABASE.collection(u'Comentario').where(u'fecha_comentario', u'>=', inicioFecha).where(u'fecha_comentario', u'<=', finFecha).stream()
+    docs = CLOUD_DATABASE.collection(u'Comentario').where(u'RedSocial', u'==', 'Facebook').where(u'fecha_comentario', u'>=', inicioFecha).where(u'fecha_comentario', u'<=', finFecha).stream()
     listData = []
     for doc in docs:
         listData.append(doc.to_dict())
