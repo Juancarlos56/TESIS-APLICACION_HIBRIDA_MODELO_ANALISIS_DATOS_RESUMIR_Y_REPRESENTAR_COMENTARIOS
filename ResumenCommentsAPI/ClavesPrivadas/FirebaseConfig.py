@@ -24,13 +24,15 @@ config={
     "storageBucket": "aplicacion-resumen-comentarios.appspot.com",
     "messagingSenderId": env('messagingSenderId'),
     "appId":  env('appId'),
+    ##Colocar la direccion de la base de datos en tiempo real env('direccion de la base de datos en tiempo real')
     "databaseURL":""
 }
 
 #here we are doing firebase authentication
 firebase=pyrebase.initialize_app(config)
+##Variable que permite obtener usuarios autentificados
 AUTHE = firebase.auth()
+##Variable que permite obtener informacion de realtime database
 REAL_DATABASE = firebase.database()
+##Variable que permite obtener archivos de firebase
 STORAGE = firebase.storage()
-
-

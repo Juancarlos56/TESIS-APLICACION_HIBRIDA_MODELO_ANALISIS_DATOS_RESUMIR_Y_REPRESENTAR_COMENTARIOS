@@ -36,7 +36,8 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =  env('DEBUG')
 
-ALLOWED_HOSTS = ['*','localhost', '127.0.0.1', '172.16.219.51']
+##Host con permisos para lectura de la API, colocar aqui nuestro dominio. 
+ALLOWED_HOSTS = ['*','localhost', '127.0.0.1', '172.20.10.3', '172.16.211.69', '192.168.100.184']
 
 
 # Application definition
@@ -51,6 +52,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'ResumenCommentsAPI.apps.ResumencommentsapiConfig',
+    ##Libreria para documentacion de API
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -61,8 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    ##Libreia de cors 
-     "corsheaders.middleware.CorsMiddleware",
+    ##Libreia para funcionamiento de cors de navegador
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'AplicacionResumen_Backend.urls'
@@ -88,7 +91,7 @@ WSGI_APPLICATION = 'AplicacionResumen_Backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+## Modificar esto si se desea unir a una base de datos externa
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -150,24 +153,32 @@ REST_FRAMEWORK = {
 
 
 ## CORS permisos de navegadores para desarrollo, no aplicable en produccion 
-
-
 CORS_ORIGIN_ALLOW_ALL: True
 CORS_ALLOW_CREDENTIALS: True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8100",
     "http://172.16.219.51:8100",
+    "http://172.20.10.3:8100",
+    "http://192.168.100.184:8100",
+    "http://172.16.211.69:8100",
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://\w+\.localhost:8100$",
     r"^https://\w+\.172.16.219.51:8100$",
+    r"^https://\w+\.172.20.10.3:8100$",
+    r"^https://\w+\.192.168.100.184:8100$",
+    r"^https://\w+\.172.16.211.69:8100$",
+    
 ]
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8100",
     "http://172.16.219.51:8100",
+    "http://172.20.10.3:8100",
+    "http://192.168.100.184:8100",
+    "http://172.16.211.69:8100",
 ]
 
 CORS_ALLOW_METHODS = [
@@ -189,4 +200,3 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
     "responseType",
 ]
-

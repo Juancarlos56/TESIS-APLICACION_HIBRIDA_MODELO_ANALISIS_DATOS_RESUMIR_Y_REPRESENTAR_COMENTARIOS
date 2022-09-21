@@ -15,3 +15,15 @@ pyrebase4
 firebase-admin
 plotly==5.9.0
 kaleido
+numpy
+pandas
+nltk
+BeautifulSoup4
+lxml
+matplotlib
+wordcloud
+scikit-learn
+transformers==4.16.2
+tensorflow
+spacy
+facebook-sdk
